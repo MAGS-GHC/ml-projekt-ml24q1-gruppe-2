@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import PIL
 import tensorflow as tf
+import joblib
 
 from tensorflow import keras
 from tensorflow.keras import layers
@@ -76,6 +77,10 @@ model = Sequential([
   layers.Dense(num_classes, name="outputs")
 ])
 
+model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+
 epochs=20
 history = model.fit(
   train_ds,
@@ -83,8 +88,9 @@ history = model.fit(
   epochs=epochs
 )
 
-model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+joblib.dump(model, 'model_jlib')
+joblib.dump(class_names, 'class_names')
+
+
 
 
