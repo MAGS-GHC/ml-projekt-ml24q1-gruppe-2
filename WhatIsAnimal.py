@@ -15,7 +15,7 @@ img_width = 180
 
 model = joblib.load('model_jlib')
 class_names = joblib.load('class_names')
-sunflower_url = "https://crocca.dk/wp-content/uploads/2023/02/Tulipanbuket-hvide-kunstige-tulipaner..jpg"
+sunflower_url = "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
 sunflower_path = tf.keras.utils.get_file(origin=sunflower_url)
 
 img = tf.keras.utils.load_img(

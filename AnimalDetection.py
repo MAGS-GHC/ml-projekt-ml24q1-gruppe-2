@@ -10,19 +10,19 @@ from tensorflow.keras.models import Sequential
 
 import pathlib
 
-dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
-data_dir = tf.keras.utils.get_file('flower_photos.tar', origin=dataset_url, extract=True)
-data_dir = pathlib.Path(data_dir).with_suffix('')
+#ataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
+#data_dir = tf.keras.utils.get_file('flower_photos.tar', origin=dataset_url, extract=True)
+data_dir = pathlib.Path("C:\\Users\\nickl\\Desktop\\dataset").with_suffix('')
 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 
-batch_size = 32
+batch_size = 30
 img_height = 180
 img_width = 180
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
   data_dir,
-  validation_split=0.2,
+  validation_split=0.1,
   subset="training",
   seed=123,
   image_size=(img_height, img_width),
@@ -81,7 +81,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-epochs=20
+epochs=50
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -91,6 +91,26 @@ history = model.fit(
 joblib.dump(model, 'model_jlib')
 joblib.dump(class_names, 'class_names')
 
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
 
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs_range = range(epochs)
+
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.title('Training and Validation Loss')
+plt.show()
 
 
