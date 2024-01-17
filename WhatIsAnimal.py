@@ -15,11 +15,11 @@ img_width = 180
 
 model = joblib.load('model_jlib')
 class_names = joblib.load('class_names')
-sunflower_url = "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
-sunflower_path = tf.keras.utils.get_file(origin=sunflower_url)
+img_url = "https://media.4-paws.org/3/e/5/6/3e56785d2a08c27be3ca72082c20fd0a4545586d/VIER%20PFOTEN_2015-04-27_010-1927x1333-1920x1328.jpg"
+img_path = tf.keras.utils.get_file(origin=img_url)
 
 img = tf.keras.utils.load_img(
-    sunflower_path, target_size=(img_height, img_width)
+    img_path, target_size=(img_height, img_width)
 )
 img_array = tf.keras.utils.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0) # Create a batch

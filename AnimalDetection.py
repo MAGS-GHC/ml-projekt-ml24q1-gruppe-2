@@ -10,19 +10,20 @@ from tensorflow.keras.models import Sequential
 
 import pathlib
 
-#ataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
+#dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
 #data_dir = tf.keras.utils.get_file('flower_photos.tar', origin=dataset_url, extract=True)
-data_dir = pathlib.Path("C:\\Users\\nickl\\Desktop\\dataset").with_suffix('')
+data_dir = pathlib.Path("C:\\Users\\nickl\\Desktop\\raw-img").with_suffix('')
 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 
-batch_size = 30
+batch_size = 20
 img_height = 180
 img_width = 180
+epochs=15
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
   data_dir,
-  validation_split=0.1,
+  validation_split=0.2,
   subset="training",
   seed=123,
   image_size=(img_height, img_width),
@@ -71,17 +72,24 @@ model = Sequential([
   layers.MaxPooling2D(),
   layers.Conv2D(64, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
+  layers.Conv2D(128, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
+  layers.Conv2D(256, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
+  layers.Conv2D(512, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
   layers.Dropout(0.2),
   layers.Flatten(),
   layers.Dense(128, activation='relu'),
   layers.Dense(num_classes, name="outputs")
 ])
 
+
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-epochs=50
+
 history = model.fit(
   train_ds,
   validation_data=val_ds,
