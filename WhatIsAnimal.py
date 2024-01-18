@@ -15,7 +15,18 @@ img_width = 180
 
 model = joblib.load('model_jlib')
 class_names = joblib.load('class_names')
-img_url = "https://media.4-paws.org/3/e/5/6/3e56785d2a08c27be3ca72082c20fd0a4545586d/VIER%20PFOTEN_2015-04-27_010-1927x1333-1920x1328.jpg"
+
+#Dog
+#img_url = "https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg"
+#Cat
+#img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg"
+#Horse
+#img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Red_roan_Quarter_Horse.jpg/800px-Red_roan_Quarter_Horse.jpg"
+#Cow
+#img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg/1200px-Cow_%28Fleckvieh_breed%29_Oeschinensee_Slaunger_2009-07-07.jpg"
+#Elephant
+img_url = "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg"
+
 img_path = tf.keras.utils.get_file(origin=img_url)
 
 img = tf.keras.utils.load_img(

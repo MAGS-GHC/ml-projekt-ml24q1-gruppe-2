@@ -12,11 +12,13 @@ import pathlib
 
 #dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
 #data_dir = tf.keras.utils.get_file('flower_photos.tar', origin=dataset_url, extract=True)
-data_dir = pathlib.Path("C:\\Users\\nickl\\Desktop\\raw-img").with_suffix('')
+
+data_dir = pathlib.Path("C:\\Users\\nickl\\Desktop\\other-img").with_suffix('')
+
 
 image_count = len(list(data_dir.glob('*/*.jpg')))
 
-batch_size = 20
+batch_size = 50
 img_height = 180
 img_width = 180
 epochs=15
@@ -47,8 +49,7 @@ val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 normalization_layer = layers.Rescaling(1./255)
 
 normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
-image_batch, labels_batch = next(iter(normalized_ds))
-first_image = image_batch[0]
+
 
 num_classes = len(class_names)
 
@@ -77,10 +78,12 @@ model = Sequential([
   layers.Conv2D(256, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
   layers.Conv2D(512, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Dropout(0.2),
+  layers.MaxPooling2D(),  
   layers.Flatten(),
+  layers.Dense(256, activation='relu'),
+  layers.Dropout(0.2),
   layers.Dense(128, activation='relu'),
+  layers.Dropout(0.2),
   layers.Dense(num_classes, name="outputs")
 ])
 
